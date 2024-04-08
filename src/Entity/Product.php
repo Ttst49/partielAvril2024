@@ -5,7 +5,9 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable()]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
@@ -19,6 +21,9 @@ class Product
 
     #[ORM\Column]
     private ?float $price = null;
+
+    #[ORM\OneToOne(inversedBy: 'product', cascade: ['persist', 'remove'])]
+    private ?Image $image = null;
 
     public function getId(): ?int
     {
@@ -45,6 +50,18 @@ class Product
     public function setPrice(float $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

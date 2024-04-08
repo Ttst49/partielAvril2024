@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add image to product{% endblock %}
+
+{% block body %}
+    {{ form_start(imageForm) }}
+    {{ form_row(imageForm.imageFile) }}
+    <button type="submit">Créer image</button>
+    {{ form_end(imageForm) }}
+{% endblock %}

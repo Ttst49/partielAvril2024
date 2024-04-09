@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
+{% block title %}Product index{% endblock %}
 
 {% block body %}
 <div>
@@ -20,6 +20,9 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                         image
+                                </th>
+                                <th>
+                                        associated QR code
                                 </th>
                         </tr>
                         </thead>
@@ -41,6 +44,9 @@
                                                         Ajouter une image
                                                 </a>
                                         {% endif %}
+                                </td>
+                                <td>
+                                        <img src="{{ path('getQrCode',{id:product.id}) }}" >
                                 </td>
                         </tr>
                         {% endfor %}

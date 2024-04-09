@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Endroid\QrCode\Builder\Builder;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,5 +42,16 @@ class AdminController extends AbstractController
             "image"=>null,
             "productForm"=>$productForm->createView()
         ]);
+    }
+
+    #[Route("/show/{id}",name: "getQrCode")]
+    public function getQrCodeForProduct(Product $product):Response{
+
+        $qrCodeData = $product->getId();
+        $result = Builder::create()
+            ->data($qrCodeData)
+            ->build();
+
+        return new Response($result->getString(), 200, ['Content-Type' => 'image/png']);
     }
 }

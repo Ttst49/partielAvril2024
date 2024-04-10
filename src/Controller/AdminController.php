@@ -61,7 +61,8 @@ class AdminController extends AbstractController
 
 
     #[Route("/pdf/{id}",name: "getPdf")]
-    public function getPdfForProduct(ProductRepository $repository,Product $product, Pdf $pdf){
+    public function getPdfForProduct(ProductRepository $repository,Product $product, Pdf $pdf): PdfResponse
+    {
 
         $qrCodeData = "localhost:8000/product/add/".$product->getId();
         $result = Builder::create()

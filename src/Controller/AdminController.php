@@ -47,7 +47,7 @@ class AdminController extends AbstractController
     #[Route("/show/{id}",name: "getQrCode")]
     public function getQrCodeForProduct(Product $product):Response{
 
-        $qrCodeData = $product->getId();
+        $qrCodeData = "localhost:8000/product/add/".$product->getId();
         $result = Builder::create()
             ->data($qrCodeData)
             ->build();

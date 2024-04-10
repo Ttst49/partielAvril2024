@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Table(name: '`order`')]
 class Order
 {
-    #[Groups("forOrderSerializing")]
+    #[Groups(["forOrderSerializing",'forUserIndexing'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -26,11 +26,11 @@ class Order
     /**
      * @var Collection<int, Product>
      */
-    #[Groups("forOrderSerializing")]
+    #[Groups(["forOrderSerializing",'forUserIndexing'])]
     #[ORM\ManyToMany(targetEntity: Product::class, inversedBy: 'orders')]
     private Collection $products;
 
-    #[Groups("forOrderSerializing")]
+    #[Groups(["forOrderSerializing",'forUserIndexing'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 

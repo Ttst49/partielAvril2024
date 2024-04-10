@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Cart;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,6 +25,10 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $cart = new Cart();
+            $cart->setOwner($user);
+            $user->setCart($cart);
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -31,6 +36,7 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $entityManager->persist($cart);
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -52,6 +58,9 @@ class RegistrationController extends AbstractController
 
         $parameters = json_decode($request->getContent(), true);
 
+        $cart = new Cart();
+        $cart->setOwner($user);
+        $user->setCart($cart);
         $user->setPassword(
             $userPasswordHasher->hashPassword(
                 $user,
@@ -59,7 +68,7 @@ class RegistrationController extends AbstractController
             )
         );
 
-
+        $manager->persist($cart);
         $manager->persist($user);
         $manager->flush();
 

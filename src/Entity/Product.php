@@ -14,17 +14,17 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
-    #[Groups("forOrderSerializing")]
+    #[Groups(["forOrderSerializing",'forUserIndexing'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Groups("forOrderSerializing")]
+    #[Groups(["forOrderSerializing",'forUserIndexing'])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $name = null;
 
-    #[Groups("forOrderSerializing")]
+    #[Groups(["forOrderSerializing",'forUserIndexing'])]
     #[ORM\Column]
     private ?float $price = null;
 

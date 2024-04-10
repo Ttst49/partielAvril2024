@@ -47,7 +47,10 @@
                                         {% endif %}
                                 </td>
                                 <td>
-                                        <img src="{{ path('getQrCode',{id:product.id}) }}" >
+                                        <a href="{{ path('getPdf',{id:product.id}) }}">
+                                                <img src="{{ path('getQrCode',{id:product.id}) }}" >
+
+                                        </a>
                                 </td>
                         </tr>
                         {% endfor %}

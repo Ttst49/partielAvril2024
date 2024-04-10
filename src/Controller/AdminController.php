@@ -7,6 +7,9 @@ use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Encoding\Encoding;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,6 +55,29 @@ class AdminController extends AbstractController
             ->data($qrCodeData)
             ->build();
 
+
         return new Response($result->getString(), 200, ['Content-Type' => 'image/png']);
+    }
+
+
+    #[Route("/pdf/{id}",name: "getPdf")]
+    public function getPdfForProduct(ProductRepository $repository,Product $product, Pdf $pdf){
+
+        $qrCodeData = "localhost:8000/product/add/".$product->getId();
+        $result = Builder::create()
+            ->data($qrCodeData)
+            ->encoding(new Encoding("UTF-8"))
+            ->build();
+
+        $name = $product->getName();
+
+        $string = $result->getDataUri();
+        $html = "<img src='$string' alt='$name'/>";
+        $pdf->setOption('enable-local-file-access', true);
+
+        return new PdfResponse(
+            $pdf->getOutputFromHtml($html),
+            $name.'.pdf'
+        );
     }
 }

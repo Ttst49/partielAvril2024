@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('_profiler_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -54,9 +54,7 @@ class RegistrationController extends AbstractController
 
         $parameters = json_decode($request->getContent(), true);
 
-        $cart = new Cart();
-        $cart->setOwner($user);
-        $user->setCart($cart);
+
         $user->setPassword(
             $userPasswordHasher->hashPassword(
                 $user,
@@ -64,7 +62,6 @@ class RegistrationController extends AbstractController
             )
         );
 
-        $manager->persist($cart);
         $manager->persist($user);
         $manager->flush();
 

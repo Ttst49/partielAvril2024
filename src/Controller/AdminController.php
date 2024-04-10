@@ -64,7 +64,7 @@ class AdminController extends AbstractController
     public function getPdfForProduct(ProductRepository $repository,Product $product, Pdf $pdf): PdfResponse
     {
 
-        $qrCodeData = "localhost:8000/product/add/".$product->getId();
+        $qrCodeData = "https://partiel.thibautstachnick.com/product/add/".$product->getId();
         $result = Builder::create()
             ->data($qrCodeData)
             ->encoding(new Encoding("UTF-8"))
